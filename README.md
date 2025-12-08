@@ -49,3 +49,8 @@ $ chmod +x flex-installer; sudo mv flex-installer /usr/bin
 Generate "sdcard.wic"  
 $ cd YOUR_FLEXBUILD_DIR/flexbuild/build_lsdk2506/images  
 $ flex-installer -i mkwic -m imx8mpevk -f firmware_imx8mpevk_sdboot.img -b boot_IMX_arm64_lts_6.6.52.tar.zst -r rootfs_lsdk2506_debian_desktop_arm64.tar.zst  
+  
+This command will generate an image file “sdcard.wic”, You could use “dd” or balenaEtcher (https://etcher.balena.io/) to flash SD card.  
+
+# Please note that the rootfs here is the Debian Desktop provided by NXP Flexbuild.  
+
