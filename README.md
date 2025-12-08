@@ -17,9 +17,10 @@ Clone the patch & config files
 $ cd YOUR_FLEXBUILD_DIR/flexbuild  
 $ git clone https://github.com/BSP-Dev/SRG_PICO-IMX8PL-BSP.git  
  
-Modify configuration file  
-Please replace configs/board/imx8mpevk.conf with imx8mpevk.conf at https://github.com/BSP-Dev/SRG_PICO-IMX8PL-BSP.git  
-  
+Copy configuration file  
+$ cd YOUR_FLEXBUILD_DIR/flexbuild  
+$ cp YOUR_FLEXBUILD_DIR/flexbuild/SRG_PICO-IMX8PL-BSP/imx8mpevk.conf configs/board/imx8mpevk.conf  
+
 Patch BSP component “atf“  
 $ cd YOUR_FLEXBUILD_DIR/flexbuild/components_lsdk2506/bsp/atf/  
 $ cp YOUR_FLEXBUILD_DIR/flexbuild/SRG_PICO-IMX8PL-BSP/srg_imx8pl_atf_8_128.patch .  
