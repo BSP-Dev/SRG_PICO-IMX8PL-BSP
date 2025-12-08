@@ -52,5 +52,5 @@ $ flex-installer -i mkwic -m imx8mpevk -f firmware_imx8mpevk_sdboot.img -b boot_
   
 This command will generate an image file “sdcard.wic”, You could use “dd” or balenaEtcher (https://etcher.balena.io/) to flash SD card.  
 
-# Please note that the rootfs here is the Debian Desktop provided by NXP Flexbuild.  
+Please note that the rootfs here is the Debian Desktop provided by NXP Flexbuild.  
 
