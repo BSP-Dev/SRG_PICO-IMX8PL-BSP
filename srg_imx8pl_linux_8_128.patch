@@ -175,7 +175,7 @@ index ddf5f76adc3b..04874cb54a5e 100644
  &uart4 {
  	status = "disabled";
 diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
-index 695d76afdfaf..c0ba471350d5 100644
+index 695d76afdfaf..b4dcf26afb3d 100644
 --- a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
 +++ b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
 @@ -14,7 +14,11 @@ / {
@@ -702,14 +702,14 @@ index 695d76afdfaf..c0ba471350d5 100644
  		wlf,gpio-cfg = <1 3>;
  		SPKVDD1-supply = <&reg_audio_pwr>;
 +		status = "disabled";
-+	};
-+
+ 	};
+ 
 +	pcf85063: pcf85063@51{
 +		compatible = "nxp,pcf85063";
 +		reg = <0x51>;
 +		status = "okay";
- 	};
- 
++	};
++
 +	tlv320aic3106: audio-codec@1b {
 +                #sound-dai-cells = <0>;
 +                compatible = "ti,tlv320aic3106";
@@ -948,13 +948,16 @@ index 695d76afdfaf..c0ba471350d5 100644
  &usdhc2 {
  	assigned-clocks = <&clk IMX8MP_CLK_USDHC2>;
  	assigned-clock-rates = <400000000>;
-@@ -990,39 +1129,51 @@ MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC		0x40000010
+@@ -990,39 +1129,53 @@ MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC		0x40000010
  			 * M.2 pin20 & pin21 need to be set to 11 for 88W9098 to select the
  			 * default Reference Clock Frequency
  			 */
 -			MX8MP_IOMUXC_SD1_DATA7__GPIO2_IO09		0x1c4
+-		>;
 +			//MX8MP_IOMUXC_SD1_DATA7__GPIO2_IO09		0x1c4
- 		>;
++                        /* cn4 pin 6 */
++                        MX8MP_IOMUXC_GPIO1_IO01__GPIO1_IO01             0x00000106
++                >;
  	};
 -
 +/*
@@ -1008,7 +1011,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  		>;
  	};
  
-@@ -1063,6 +1214,7 @@ MX8MP_IOMUXC_SAI1_TXD3__ENET1_RGMII_TD3		0x16
+@@ -1063,6 +1216,7 @@ MX8MP_IOMUXC_SAI1_TXD3__ENET1_RGMII_TD3		0x16
  			MX8MP_IOMUXC_SAI1_TXD4__ENET1_RGMII_TX_CTL	0x16
  			MX8MP_IOMUXC_SAI1_TXD5__ENET1_RGMII_TXC		0x16
  			MX8MP_IOMUXC_SAI1_RXD0__GPIO4_IO02		0x10
@@ -1016,7 +1019,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  		>;
  	};
  
-@@ -1146,28 +1298,34 @@ MX8MP_IOMUXC_GPIO1_IO08__GPIO1_IO08	0x16
+@@ -1146,28 +1300,34 @@ MX8MP_IOMUXC_GPIO1_IO08__GPIO1_IO08	0x16
  	pinctrl_pcie0: pcie0grp {
  		fsl,pins = <
  			MX8MP_IOMUXC_I2C4_SCL__PCIE_CLKREQ_B	0x60 /* open drain, pull up */
@@ -1061,7 +1064,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  
  	pinctrl_pwm1: pwm1grp {
  		fsl,pins = <
-@@ -1180,13 +1338,13 @@ pinctrl_pwm2: pwm2grp {
+@@ -1180,13 +1340,13 @@ pinctrl_pwm2: pwm2grp {
  			MX8MP_IOMUXC_GPIO1_IO11__PWM2_OUT	0x116
  		>;
  	};
@@ -1077,7 +1080,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  	pinctrl_reg_usdhc2_vmmc: regusdhc2vmmcgrp {
  		fsl,pins = <
  			MX8MP_IOMUXC_SD2_RESET_B__GPIO2_IO19	0x40
-@@ -1195,11 +1353,12 @@ MX8MP_IOMUXC_SD2_RESET_B__GPIO2_IO19	0x40
+@@ -1195,11 +1355,12 @@ MX8MP_IOMUXC_SD2_RESET_B__GPIO2_IO19	0x40
  
  	pinctrl_pdm: pdmgrp {
  		fsl,pins = <
@@ -1095,7 +1098,20 @@ index 695d76afdfaf..c0ba471350d5 100644
  		>;
  	};
  
-@@ -1226,7 +1385,7 @@ MX8MP_IOMUXC_SAI3_RXC__GPIO4_IO29		0xd6
+@@ -1208,8 +1369,10 @@ pinctrl_sai2: sai2grp {
+ 			MX8MP_IOMUXC_SAI2_TXC__AUDIOMIX_SAI2_TX_BCLK	0xd6
+ 			MX8MP_IOMUXC_SAI2_TXFS__AUDIOMIX_SAI2_TX_SYNC	0xd6
+ 			MX8MP_IOMUXC_SAI2_TXD0__AUDIOMIX_SAI2_TX_DATA00	0xd6
+-			MX8MP_IOMUXC_SAI2_RXD0__AUDIOMIX_SAI2_RX_DATA00	0xd6
+-		>;
++			//MX8MP_IOMUXC_SAI2_RXD0__AUDIOMIX_SAI2_RX_DATA00	0xd6
++		        /* cn4 pin 8 */
++                        MX8MP_IOMUXC_SAI2_RXD0__GPIO4_IO23                      0x00000106
++                >;
+ 	};
+ 
+ 	pinctrl_sai3: sai3grp {
+@@ -1226,7 +1389,7 @@ MX8MP_IOMUXC_SAI3_RXC__GPIO4_IO29		0xd6
  
  	pinctrl_i2c2_synaptics_dsx_io: synaptics_dsx_iogrp {
  		fsl,pins = <
@@ -1104,7 +1120,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  		>;
  	};
  
-@@ -1241,7 +1400,7 @@ MX8MP_IOMUXC_UART3_TXD__UART1_DCE_RTS	0x140
+@@ -1241,7 +1404,7 @@ MX8MP_IOMUXC_UART3_TXD__UART1_DCE_RTS	0x140
  
  	pinctrl_typec: typec1grp {
  		fsl,pins = <
@@ -1113,7 +1129,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  		>;
  	};
  
-@@ -1253,14 +1412,17 @@ MX8MP_IOMUXC_SAI1_MCLK__GPIO4_IO20	0x16
+@@ -1253,14 +1416,17 @@ MX8MP_IOMUXC_SAI1_MCLK__GPIO4_IO20	0x16
  
  	pinctrl_uart2: uart2grp {
  		fsl,pins = <
@@ -1134,7 +1150,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  		>;
  	};
  
-@@ -1273,6 +1435,13 @@ MX8MP_IOMUXC_ECSPI1_MISO__UART3_DCE_CTS		0x140
+@@ -1273,6 +1439,13 @@ MX8MP_IOMUXC_ECSPI1_MISO__UART3_DCE_CTS		0x140
  		>;
  	};
  
@@ -1148,7 +1164,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  	pinctrl_usdhc2: usdhc2grp {
  		fsl,pins = <
  			MX8MP_IOMUXC_SD2_CLK__USDHC2_CLK	0x190
-@@ -1369,6 +1538,18 @@ MX8MP_IOMUXC_GPIO1_IO02__WDOG1_WDOG_B	0x166
+@@ -1369,6 +1542,18 @@ MX8MP_IOMUXC_GPIO1_IO02__WDOG1_WDOG_B	0x166
  		>;
  	};
  
@@ -1167,7 +1183,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  	pinctrl_csi0_pwn: csi0_pwn_grp {
  		fsl,pins = <
  			MX8MP_IOMUXC_SD1_STROBE__GPIO2_IO11	0x10
-@@ -1377,13 +1558,13 @@ MX8MP_IOMUXC_SD1_STROBE__GPIO2_IO11	0x10
+@@ -1377,13 +1562,13 @@ MX8MP_IOMUXC_SD1_STROBE__GPIO2_IO11	0x10
  
  	pinctrl_csi0_rst: csi0_rst_grp {
  		fsl,pins = <
@@ -1183,7 +1199,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  		>;
  	};
  };
-@@ -1421,7 +1602,7 @@ &mix_gpu_ml {
+@@ -1421,7 +1606,7 @@ &mix_gpu_ml {
  };
  
  &mipi_csi_0 {
@@ -1193,7 +1209,7 @@ index 695d76afdfaf..c0ba471350d5 100644
  	port {
  		mipi_csi0_ep: endpoint {
 diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index 3e6d8c76d30a..996567e78486 100644
+index c3c7e36ba5c4..f4089683fa7d 100644
 --- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
 +++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
 @@ -20,6 +20,8 @@ / {
@@ -1345,7 +1361,7 @@ index 3e6d8c76d30a..996567e78486 100644
  
  			i2c4: i2c@30a50000 {
 diff --git a/arch/arm64/configs/imx_v8_defconfig b/arch/arm64/configs/imx_v8_defconfig
-index f076bf99e0cd..c2c5272713e6 100644
+index 07779ca2c486..1561dedc2e05 100644
 --- a/arch/arm64/configs/imx_v8_defconfig
 +++ b/arch/arm64/configs/imx_v8_defconfig
 @@ -1,4 +1,3 @@
@@ -1538,7 +1554,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_SMC91X=y
  CONFIG_SMSC911X=y
  CONFIG_STMMAC_ETH=y
-@@ -352,13 +391,15 @@ CONFIG_MICROSEMI_PHY=y
+@@ -353,13 +392,15 @@ CONFIG_MOTORCOMM_PHY=y
  CONFIG_NXP_C45_TJA11XX_PHY=y
  CONFIG_NXP_TJA11XX_PHY=y
  CONFIG_AT803X_PHY=y
@@ -1555,7 +1571,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_USB_PEGASUS=m
  CONFIG_USB_RTL8150=m
  CONFIG_USB_RTL8152=y
-@@ -377,6 +418,13 @@ CONFIG_USB_NET_PLUSB=m
+@@ -378,6 +419,13 @@ CONFIG_USB_NET_PLUSB=m
  CONFIG_USB_NET_MCS7830=m
  CONFIG_USB_NET_CDC_SUBSET=m
  CONFIG_USB_NET_ZAURUS=m
@@ -1569,7 +1585,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_HOSTAP=y
  CONFIG_WL18XX=m
  CONFIG_WLCORE_SDIO=m
-@@ -426,7 +474,10 @@ CONFIG_IPMI_HANDLER=m
+@@ -427,7 +475,10 @@ CONFIG_IPMI_HANDLER=m
  CONFIG_IPMI_DEVICE_INTERFACE=m
  CONFIG_IPMI_SI=m
  CONFIG_TCG_TPM=y
@@ -1581,7 +1597,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_I2C_CHARDEV=y
  CONFIG_I2C_MUX=y
  CONFIG_I2C_MUX_PCA954x=y
-@@ -620,7 +671,6 @@ CONFIG_VIDEO_MAX96724=m
+@@ -621,7 +672,6 @@ CONFIG_VIDEO_MAX96724=m
  CONFIG_VIDEO_MX95MBCAM=m
  CONFIG_VIDEO_DS90UB953=m
  CONFIG_VIDEO_DS90UB960=m
@@ -1589,7 +1605,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_IMX_DPU_CORE=y
  CONFIG_IMX8MM_LCDIF_CORE=y
  CONFIG_IMX_LCDIFV3_CORE=y
-@@ -732,7 +782,6 @@ CONFIG_SND_SOC_SOF_IMX_TOPLEVEL=y
+@@ -734,7 +784,6 @@ CONFIG_SND_SOC_SOF_IMX_TOPLEVEL=y
  CONFIG_SND_SOC_SOF_IMX8=m
  CONFIG_SND_SOC_SOF_IMX8M=m
  CONFIG_SND_SOC_SOF_IMX8ULP=m
@@ -1597,7 +1613,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_SND_SOC_AK4613=m
  CONFIG_SND_SOC_BT_SCO=y
  CONFIG_SND_SOC_CROS_EC_CODEC=m
-@@ -740,6 +789,8 @@ CONFIG_SND_SOC_CS42XX8_I2C=y
+@@ -742,6 +791,8 @@ CONFIG_SND_SOC_CS42XX8_I2C=y
  CONFIG_SND_SOC_DMIC=m
  CONFIG_SND_SOC_ES7134=m
  CONFIG_SND_SOC_ES7241=m
@@ -1606,7 +1622,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_SND_SOC_GTM601=m
  CONFIG_SND_SOC_MAX98357A=m
  CONFIG_SND_SOC_MAX98927=m
-@@ -765,6 +816,7 @@ CONFIG_SND_SIMPLE_CARD=y
+@@ -767,6 +818,7 @@ CONFIG_SND_SIMPLE_CARD=y
  CONFIG_SND_AUDIO_GRAPH_CARD=y
  CONFIG_SND_VIRTIO=y
  CONFIG_HID_MULTITOUCH=m
@@ -1614,7 +1630,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_I2C_HID_ACPI=m
  CONFIG_I2C_HID_OF=m
  CONFIG_USB_CONN_GPIO=y
-@@ -798,9 +850,11 @@ CONFIG_USB_SERIAL_GENERIC=y
+@@ -800,9 +852,11 @@ CONFIG_USB_SERIAL_GENERIC=y
  CONFIG_USB_SERIAL_SIMPLE=y
  CONFIG_USB_SERIAL_CP210X=m
  CONFIG_USB_SERIAL_FTDI_SIO=y
@@ -1627,7 +1643,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_USB_HSIC_USB3503=y
  CONFIG_NOP_USB_XCEIV=y
  CONFIG_USB_MXS_PHY=y
-@@ -884,6 +938,7 @@ CONFIG_RTC_DRV_DS1307=m
+@@ -886,6 +940,7 @@ CONFIG_RTC_DRV_DS1307=m
  CONFIG_RTC_DRV_HYM8563=m
  CONFIG_RTC_DRV_MAX77686=y
  CONFIG_RTC_DRV_RK808=m
@@ -1635,7 +1651,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_RTC_DRV_PCF85363=m
  CONFIG_RTC_DRV_M41T80=m
  CONFIG_RTC_DRV_RX8581=m
-@@ -1002,9 +1057,6 @@ CONFIG_FSL_MC_DPIO=y
+@@ -1004,9 +1059,6 @@ CONFIG_FSL_MC_DPIO=y
  CONFIG_FSL_RCPM=y
  CONFIG_FSL_QIXIS=y
  CONFIG_SOC_TI=y
@@ -1645,7 +1661,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_EXTCON_PTN5150=m
  CONFIG_EXTCON_USB_GPIO=y
  CONFIG_EXTCON_USBC_CROS_EC=y
-@@ -1093,6 +1145,7 @@ CONFIG_MXC_EMVSIM=y
+@@ -1095,6 +1147,7 @@ CONFIG_MXC_EMVSIM=y
  CONFIG_EXT2_FS=y
  CONFIG_EXT3_FS=y
  CONFIG_EXT4_FS_POSIX_ACL=y
@@ -1653,7 +1669,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_BTRFS_FS=m
  CONFIG_BTRFS_FS_POSIX_ACL=y
  CONFIG_FANOTIFY=y
-@@ -1101,8 +1154,16 @@ CONFIG_QUOTA=y
+@@ -1103,8 +1156,16 @@ CONFIG_QUOTA=y
  CONFIG_AUTOFS_FS=y
  CONFIG_FUSE_FS=m
  CONFIG_CUSE=m
@@ -1671,7 +1687,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_TMPFS_POSIX_ACL=y
  CONFIG_HUGETLBFS=y
  CONFIG_EFIVAR_FS=y
-@@ -1134,6 +1195,7 @@ CONFIG_CRYPTO_FCRYPT=m
+@@ -1136,6 +1197,7 @@ CONFIG_CRYPTO_FCRYPT=m
  CONFIG_CRYPTO_KHAZAD=m
  CONFIG_CRYPTO_SEED=m
  CONFIG_CRYPTO_SERPENT=m
@@ -1679,7 +1695,7 @@ index f076bf99e0cd..c2c5272713e6 100644
  CONFIG_CRYPTO_TEA=m
  CONFIG_CRYPTO_TWOFISH=m
  CONFIG_CRYPTO_ARC4=m
-@@ -1147,6 +1209,7 @@ CONFIG_CRYPTO_ECHAINIV=y
+@@ -1149,6 +1211,7 @@ CONFIG_CRYPTO_ECHAINIV=y
  CONFIG_CRYPTO_TLS=m
  CONFIG_CRYPTO_MD4=m
  CONFIG_CRYPTO_RMD160=m
@@ -1869,7 +1885,7 @@ index fb8a57afe687..a3502b07fa58 100644
  		.data = &ampire_am_1280800n3tzqw_t00h,
  	}, {
 diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index e9c214b0ee27..b4dab24df789 100644
+index ac967dbd2c0d..2d703c675d05 100644
 --- a/drivers/tty/serial/imx.c
 +++ b/drivers/tty/serial/imx.c
 @@ -166,6 +166,11 @@
@@ -1907,34 +1923,33 @@ index e9c214b0ee27..b4dab24df789 100644
  /* called with port.lock taken and irqs caller dependent */
  static void imx_uart_rts_active(struct imx_port *sport, u32 *ucr2)
  {
-@@ -617,6 +638,26 @@ static void imx_uart_dma_tx_callback(void *data)
+@@ -617,6 +638,25 @@ static void imx_uart_dma_tx_callback(void *data)
  	}
  
- 	spin_unlock_irqrestore(&sport->port.lock, flags);
-+
+ 	uart_port_unlock_irqrestore(&sport->port, flags);
 +#if 1
-+    // added by jason, 2023.8.23
-+    if(3 != sport->port.line) {
-+        // wait for transmitter to become empty
-+        while (!(imx_uart_readl(sport, USR2) & USR2_TXDC));
++        // added by jason, 2023.8.23
++        if(3 != sport->port.line) {
++                // wait for transmitter to become empty
++                while (!(imx_uart_readl(sport, USR2) & USR2_TXDC));
 +#if 1
-+// recv mode.
-+            u32 ucr2 = imx_uart_readl(sport, UCR2);
++                // recv mode.
++                u32 ucr2 = imx_uart_readl(sport, UCR2);
 +#ifdef RCD_EN_485_RTS_HIGH_ACT
-+            imx_uart_rts_inactive2(sport, &ucr2);
++                imx_uart_rts_inactive2(sport, &ucr2);
 +#endif
 +#ifdef RCD_EN_485_RTS_LOW_ACT
-+            imx_uart_rts_active2(sport, &ucr2);
++                imx_uart_rts_active2(sport, &ucr2);
 +#endif
-+            imx_uart_writel(sport, ucr2, UCR2);
++                imx_uart_writel(sport, ucr2, UCR2);
 +#endif
-+// end
-+    }
++               // end
++        }
 +#endif
  }
  
  /* called with port.lock taken and irqs off */
-@@ -688,6 +729,38 @@ static void imx_uart_start_tx(struct uart_port *port)
+@@ -688,6 +728,38 @@ static void imx_uart_start_tx(struct uart_port *port)
  
  	if (!sport->port.x_char && uart_circ_empty(&port->state->xmit))
  		return;
@@ -1973,7 +1988,7 @@ index e9c214b0ee27..b4dab24df789 100644
  
  	/*
  	 * We cannot simply do nothing here if sport->tx_state == SEND already
-@@ -1091,7 +1164,11 @@ static void imx_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
+@@ -1091,7 +1163,11 @@ static void imx_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
  {
  	struct imx_port *sport = (struct imx_port *)port;
  	u32 ucr3, uts;
@@ -1986,7 +2001,7 @@ index e9c214b0ee27..b4dab24df789 100644
  	if (!(port->rs485.flags & SER_RS485_ENABLED)) {
  		u32 ucr2;
  
-@@ -1686,6 +1763,20 @@ imx_uart_set_termios(struct uart_port *port, struct ktermios *termios,
+@@ -1686,6 +1762,20 @@ imx_uart_set_termios(struct uart_port *port, struct ktermios *termios,
  	unsigned long div;
  	unsigned long num, denom, old_ubir, old_ubmr;
  	uint64_t tdiv64;

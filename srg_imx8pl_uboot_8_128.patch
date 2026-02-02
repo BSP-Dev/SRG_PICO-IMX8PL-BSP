@@ -21,7 +21,7 @@ index 445f45214b0..9b2d4aab02c 100644
  };
  
 diff --git a/arch/arm/dts/imx8mp-evk.dts b/arch/arm/dts/imx8mp-evk.dts
-index 36b860125e0..e5e40ec5af1 100644
+index 36b860125e0..75fd9aec522 100644
 --- a/arch/arm/dts/imx8mp-evk.dts
 +++ b/arch/arm/dts/imx8mp-evk.dts
 @@ -14,12 +14,12 @@
@@ -247,7 +247,7 @@ index 36b860125e0..e5e40ec5af1 100644
  };
  
  /* I2C on expansion connector J22. */
-@@ -562,20 +488,14 @@
+@@ -562,20 +488,33 @@
  	status = "okay";
  };
  
@@ -260,6 +260,25 @@ index 36b860125e0..e5e40ec5af1 100644
  	status = "okay";
  };
  
++&gpio1{
++        usb-hog {
++                gpio-hog;
++                gpios = <5 GPIO_ACTIVE_HIGH>;
++                output-high;
++                line-name = "USB GPIO0_5";
++        };
++};
++
++
++&gpio2{
++        usb-hog {
++                gpio-hog;
++                gpios = <0 GPIO_ACTIVE_HIGH>;
++                output-high;
++                line-name = "USB Minicard";
++        };
++};
++
  &usb3_phy0 {
 -	fsl,phy-tx-vref-tune = <0xe>;
 -	fsl,phy-tx-preemp-amp-tune = <3>;
@@ -270,7 +289,7 @@ index 36b860125e0..e5e40ec5af1 100644
  	status = "okay";
  };
  
-@@ -584,26 +504,13 @@
+@@ -584,26 +523,13 @@
  };
  
  &usb_dwc3_0 {
@@ -283,7 +302,7 @@ index 36b860125e0..e5e40ec5af1 100644
 -	snps,dis-u1-entry-quirk;
 -	snps,dis-u2-entry-quirk;
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_usb1_vbus>;
++	pinctrl-0 = <&pinctrl_usb2_vbus>;
 +	dr_mode = "host";
  	status = "okay";
 -
@@ -300,7 +319,18 @@ index 36b860125e0..e5e40ec5af1 100644
  	status = "okay";
  };
  
-@@ -691,32 +598,6 @@
+@@ -612,8 +538,8 @@
+ };
+ 
+ &usb_dwc3_1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_usb1_vbus>;
++	//pinctrl-names = "default";
++	//pinctrl-0 = <&pinctrl_usb1_vbus>;
+ 	dr_mode = "host";
+ 	status = "okay";
+ };
+@@ -691,32 +617,6 @@
  		>;
  	};
  
@@ -333,38 +363,49 @@ index 36b860125e0..e5e40ec5af1 100644
  	pinctrl_flexspi0: flexspi0grp {
  		fsl,pins = <
  			MX8MP_IOMUXC_NAND_ALE__FLEXSPI_A_SCLK           0x1c2
-@@ -821,42 +702,36 @@
+@@ -821,42 +721,42 @@
  		>;
  	};
  
 -	pinctrl_typec: typec1grp {
--		fsl,pins = <
--			MX8MP_IOMUXC_SAI1_TXD7__GPIO4_IO19	0x1c4
--		>;
--	};
--
--	pinctrl_typec_mux: typec1muxgrp {
 +	pinctrl_uart4: uart4grp {
  		fsl,pins = <
--			MX8MP_IOMUXC_SAI1_MCLK__GPIO4_IO20	0x16
--		>;
--	};
--
--	pinctrl_uart2: uart2grp {
--		fsl,pins = <
--			MX8MP_IOMUXC_UART2_RXD__UART2_DCE_RX	0x140
--			MX8MP_IOMUXC_UART2_TXD__UART2_DCE_TX	0x140
+-			MX8MP_IOMUXC_SAI1_TXD7__GPIO4_IO19	0x1c4
 +			MX8MP_IOMUXC_UART4_RXD__UART4_DCE_RX	0x6
 +			MX8MP_IOMUXC_UART4_TXD__UART4_DCE_TX	0x140
  		>;
  	};
  
- 	pinctrl_usb1_vbus: usb1grp {
+-	pinctrl_typec_mux: typec1muxgrp {
++	pinctrl_usb1_vbus: usb1grp {
  		fsl,pins = <
--			MX8MP_IOMUXC_GPIO1_IO14__USB2_PWR		0x10
+-			MX8MP_IOMUXC_SAI1_MCLK__GPIO4_IO20	0x16
 +			MX8MP_IOMUXC_GPIO1_IO05__GPIO1_IO05     0x19
  		>;
  	};
+ 
+-	pinctrl_uart2: uart2grp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_UART2_RXD__UART2_DCE_RX	0x140
+-			MX8MP_IOMUXC_UART2_TXD__UART2_DCE_TX	0x140
+-		>;
+-	};
++	pinctrl_usb2_vbus: usb2grp {
++                fsl,pins = <
++                        MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06 	0x19
++                >;
++        };
+ 
+-	pinctrl_usb1_vbus: usb1grp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_GPIO1_IO14__USB2_PWR		0x10
+-		>;
+-	};
++        pinctrl_usb2_vbus: usb2grp {
++                fsl,pins = <
++                        MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06 	0x19
++                >;
++        };
  
 -	pinctrl_usdhc2: usdhc2grp {
 -		fsl,pins = <
@@ -377,12 +418,6 @@ index 36b860125e0..e5e40ec5af1 100644
 -			MX8MP_IOMUXC_GPIO1_IO04__USDHC2_VSELECT	0xc0
 -		>;
 -	};
-+        pinctrl_usb2_vbus: usb2grp {
-+                fsl,pins = <
-+                        MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06 	0x19
-+                >;
-+        };
-+
 +        pinctrl_usdhc2: usdhc2grp {
 +	        fsl,pins = <
 +                        MX8MP_IOMUXC_SD2_CLK__USDHC2_CLK	0x190
@@ -397,7 +432,7 @@ index 36b860125e0..e5e40ec5af1 100644
  
  	pinctrl_usdhc2_100mhz: usdhc2-100mhzgrp {
  		fsl,pins = <
-@@ -941,4 +816,14 @@
+@@ -941,4 +841,14 @@
  			MX8MP_IOMUXC_GPIO1_IO02__WDOG1_WDOG_B	0x166
  		>;
  	};
