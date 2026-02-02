@@ -34,6 +34,7 @@ $ cp YOUR_FLEXBUILD_DIR/flexbuild/SRG_PICO-IMX8PL-BSP/imx8mp_evk_defconfig confi
 
 Patch kernel linux  
 $ cd YOUR_FLEXBUILD_DIR/flexbuild/components_lsdk2506/linux/linux  
+$ cp YOUR_FLEXBUILD_DIR/flexbuild/SRG_PICO-IMX8PL-BSP/srg_imx8pl_linux_8_128.patch .
 $ git apply srg_imx8pl_linux_8_128.patch  
 
 After patching, please run the following commands to rebuild the components  
